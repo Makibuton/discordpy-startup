@@ -26,7 +26,7 @@ async def weather(ctx):
     msg = resp['location']['city'] + "の天気は\n"
     for f in resp['forecasts']:
         msg += f['dateLabel'] + "が" + f['telop'] + "\n"
-    msg += resp['description']
+    msg += resp['description']['text']
     await ctx.send(msg)
     
 bot.run(token)
