@@ -1,10 +1,12 @@
 from discord.ext import commands
 import os
 import traceback
+import urllib.request
+import json
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
-
+citycode = '130010'
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -17,5 +19,12 @@ async def on_command_error(ctx, error):
 async def ping(ctx):
     await ctx.send('pong')
 
-
+async def weather(ctx):
+    resp = urllib.request.urlopen('http://weather.livedoor.com/forecast/webservice/json/v1?city=%s'%citycode).read()
+    resp = json.loads(resp.decode('utf-8'))
+    print(resp['location']['city'] + "の天気は")
+    for f in resp['forecasts']:
+        print(f['dateLabel'] + "が" + f['telop'])
+    print(resp['description'])
+    
 bot.run(token)
