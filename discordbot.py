@@ -4,7 +4,7 @@ import traceback
 import urllib.request
 import json
 
-bot = commands.Bot(command_prefix='/')
+bot = commands.Bot(command_prefix='!')
 token = os.environ['DISCORD_BOT_TOKEN']
 citycode = '130010'
 
@@ -20,13 +20,15 @@ async def ping(ctx):
     await ctx.send('pong')
 
 @bot.command()
-async def weather(ctx):
+async def tenki(ctx):
     resp = urllib.request.urlopen('http://weather.livedoor.com/forecast/webservice/json/v1?city=%s'%citycode).read()
     resp = json.loads(resp.decode('utf-8'))
     msg = resp['location']['city'] + "の天気は\n"
     for f in resp['forecasts']:
         msg += f['dateLabel'] + "が" + f['telop'] + "\n"
+    msg += "```"
     msg += resp['description']['text']
+    msg += "```"
     await ctx.send(msg)
     
 bot.run(token)
