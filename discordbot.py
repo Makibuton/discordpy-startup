@@ -11,6 +11,10 @@ citycode = '130010'
 CHANNEL_ID = 706616249383256084
 
 @bot.event
+async def on_ready():
+    loop.start()
+
+@bot.event
 async def on_command_error(ctx, error):
     orig_error = getattr(error, "original", error)
     error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
@@ -63,8 +67,5 @@ def getserver():
     msg += "Active:" + str(resp['result']['user']['active'])
     msg += "```"
     return msg
-    
-#ループ処理実行
-loop.start()
 
 bot.run(token)
