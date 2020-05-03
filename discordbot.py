@@ -33,7 +33,7 @@ async def tenki(ctx):
     
 @bot.command()
 async def server(ctx):
-    resp = urllib.request.urlopen('http://nyatla.jp/ws/mcsapi/mcsapi.php?cmd=si&s=106.72.172.97&p=6016&f=json').read().decode('utf-8')
+    resp = urllib.request.urlopen('http://nyatla.jp/ws/mcsapi/mcsapi.php?cmd=si&s=106.72.172.97&p=6016&f=json').read().decode('utf-8', strict=False)
     
     resp = resp.replace('online', '"online"')
     resp = resp.replace('server', '"server"')
