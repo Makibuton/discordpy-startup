@@ -47,7 +47,7 @@ async def server(ctx):
     resp = resp.replace('max', '"max"')
     resp = resp.replace('update_time', '"update_time"')
     
-    resp = json.loads(resp)
+    resp = json.loads(resp, strict=False)
     msg += "```"
     msg += "Server:" + resp['server']['name'] + ":" + resp['server']['port'] + "\n"
     msg += "Online:" + resp['online'] + "\n"
