@@ -44,6 +44,7 @@ async def server(ctx):
 @tasks.loop(seconds=60)
 async def loop():
     channel = bot.get_channel(CHANNEL_ID)
+    await channel.purge()
     await channel.send(getserver())  
 
 def getserver():
