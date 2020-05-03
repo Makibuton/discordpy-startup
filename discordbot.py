@@ -31,4 +31,28 @@ async def tenki(ctx):
     msg += "```"
     await ctx.send(msg)
     
+@bot.command()
+async def server(ctx):
+    resp = urllib.request.urlopen('http://nyatla.jp/ws/mcsapi/mcsapi.php?cmd=si&s=106.72.172.97&p=6016&f=json').read()
+    
+    resp = resp.replace('online', '"online"')
+    resp = resp.replace('server', '"server"')
+    resp = resp.replace('name', '"name"')
+    resp = resp.replace('port', '"port"')
+    resp = resp.replace('result', '"result"')
+    resp = resp.replace('retcode', '"retcode"')
+    resp = resp.replace('title', '"title"')
+    resp = resp.replace('user', '"user"')
+    resp = resp.replace('active', '"active"')
+    resp = resp.replace('max', '"max"')
+    resp = resp.replace('update_time', '"update_time"')
+    
+    resp = json.loads(resp.decode('utf-8'))
+    msg += "```"
+    msg += "Server:" + resp['server']['name'] + ":" + resp['server']['port'] + "\n"
+    msg += "Online:" + resp['online'] + "\n"
+    msg += "Active:" + resp['result']['user']['active']
+    msg += "```"
+    await ctx.send(msg)
+    
 bot.run(token)
