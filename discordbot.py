@@ -49,9 +49,9 @@ async def server(ctx):
     
     resp = json.loads(resp, strict=False)
     msg = "```"
-    msg += "Server:" + resp['server']['name'] + ":" + resp['server']['port'] + "\n"
-    msg += "Online:" + resp['online'] + "\n"
-    msg += "Active:" + resp['result']['user']['active']
+    msg += "Server:" + resp['server']['name'] + ":" + str(resp['server']['port']) + "\n"
+    msg += "Online:" + str(resp['online']) + "\n"
+    msg += "Active:" + str(resp['result']['user']['active'])
     msg += "```"
     await ctx.send(msg)
     
