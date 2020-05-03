@@ -7,6 +7,7 @@ import json
 bot = commands.Bot(command_prefix='!')
 token = os.environ['DISCORD_BOT_TOKEN']
 citycode = '130010'
+CHANNEL_ID = 706616249383256084
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -33,7 +34,15 @@ async def tenki(ctx):
     
 @bot.command()
 async def server(ctx):
-    resp = urllib.request.urlopen('http://nyatla.jp/ws/mcsapi/mcsapi.php?cmd=si&s=106.72.172.97&p=6016&f=json').read().decode('utf-8','replace')
+    await ctx.send(getserver())
+    
+@tasks.loop(seconds=60)
+async def loop():
+    channel = bot.get_channel(CHANNEL_ID)
+    await channel.send(getserver())  
+
+def getserver():
+        resp = urllib.request.urlopen('http://nyatla.jp/ws/mcsapi/mcsapi.php?cmd=si&s=106.72.172.97&p=6016&f=json').read().decode('utf-8','replace')
     
     resp = resp.replace('online', '"online"')
     resp = resp.replace('server', '"server"')
@@ -53,6 +62,9 @@ async def server(ctx):
     msg += "Online:" + str(resp['online']) + "\n"
     msg += "Active:" + str(resp['result']['user']['active'])
     msg += "```"
-    await ctx.send(msg)
+    return msg
     
+#ループ処理実行
+loop.start()
+
 bot.run(token)
