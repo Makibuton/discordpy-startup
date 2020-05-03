@@ -43,8 +43,7 @@ async def loop():
     await channel.send(getserver())  
 
 def getserver():
-        resp = urllib.request.urlopen('http://nyatla.jp/ws/mcsapi/mcsapi.php?cmd=si&s=106.72.172.97&p=6016&f=json').read().decode('utf-8','replace')
-    
+    resp = urllib.request.urlopen('http://nyatla.jp/ws/mcsapi/mcsapi.php?cmd=si&s=106.72.172.97&p=6016&f=json').read().decode('utf-8','replace')
     resp = resp.replace('online', '"online"')
     resp = resp.replace('server', '"server"')
     resp = resp.replace('name', '"name"')
